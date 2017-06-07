@@ -29,9 +29,9 @@ y_test = np_utils.to_categorical(y_test)
 num_classes = y_test.shape[1]
 
 
-# define the larger model
+# define the larger models
 def larger_model():
-    # create model
+    # create models
     model = Sequential()
     # convolution -> pooling -> dropout
     model.add(Conv2D(256, (3, 3), input_shape=(3, 32, 32), activation='relu', padding='same'))
@@ -52,24 +52,24 @@ def larger_model():
     model.add(Dropout(0.25))
     model.add(Dense(1024, activation='relu'))
     model.add(Dense(num_classes, activation='softmax'))
-    # Compile model
+    # Compile models
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
 
-# build the model
+# build the models
 model = larger_model()
-# Fit the model
+# Fit the models
 model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=100, batch_size=200)
-# Final evaluation of the model
+# Final evaluation of the models
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Large CNN Error: %.2f%%" % (100 - scores[1] * 100))
 
-# save the model for loading later in app
+# save the models for loading later in app
 model_json = model.to_json()
 with open('./model_saves/cifar10_cnn_model.json', 'w') as json_file:
     json_file.write(model_json)
 # serializing weights to HDF5 a grid style data format ideal for saving/loading weights
 model.save_weights('./model_saves/cifar10_cnn_model.h5')
-print("Saved model to disk")
+print("Saved models to disk")
 
