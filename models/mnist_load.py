@@ -19,13 +19,27 @@ def load_model_from_save(json_file, hd5_file):
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
+
 def np_array_from_image(image_url):
     response = requests.get(image_url)
     image = Image.open(BytesIO(response.content))
     image = image.resize((28, 28))
     image = image.convert(mode="L")
     np_image = np.array(image)
+    # reshape image array for input to model
+    np_image = np.expand_dims(np_image, axis=0)
+    np_image = np.expand_dims(np_image, axis=0)
+    # normalize pixel values
+    np_image = np_image / 255
     return np_image
+
+
+def classify_image(input_url):
+    np_image = np_array_from_image(input_url)
+    np_image = np.reshape(np_image, 1, 28, 28, 1)
+    model_prediction = np.argmax(mnist_model.predict(np_image), axis=0)
+    return model_prediction
+
 
 def test_model_output():
     url = "http://khanhxnguyen.com/wp-content/uploads/2017/03/mnist-2.png"
@@ -51,16 +65,19 @@ def test_model_output():
     # http://machinelearningmastery.com/save-load-keras-deep-learning-models/
     # loading json and creating models from saved files
     # evaluate models and compare results to results from training:
+
     mnist_json = './model_saves/mnist_cnn_model.json'
     mnist_hd5 = './model_saves/mnist_cnn_model.h5'
     mnist_model = load_model_from_save(json_file=mnist_json, hd5_file=mnist_hd5)
 
-    test_input_image = X_test[0]
-    expanded_dim_img = np.expand_dims(np_image, axis=0) /255
+    # test_input_image = X_test[0]
 
-    output_test = mnist_model.predict(np.expand_dims(test_input_image, axis=0))
+    output_test = mnist_model.predict(np_image)
     print("Prediction for X[0]:", np.argmax(output_test))
 
     scores = mnist_model.evaluate(X_test, y_test, verbose=0)
-    print("Large CNN Error: %.2f%%" % (100-scores[1]*100))
+    print("Large CNN Error: %.2f%%" % (100 - scores[1] * 100))
 
+
+if __name__ == "__main__":
+    test_model_output()

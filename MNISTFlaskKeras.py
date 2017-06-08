@@ -16,6 +16,7 @@ mnist_json = './models/model_saves/mnist_cnn_model.json'
 mnist_hd5 = './models/model_saves/mnist_cnn_model.h5'
 mnist_model = load_model_from_save(mnist_json, mnist_hd5)
 
+
 # testing using model for classifying an image from URL
 
 # url = "http://khanhxnguyen.com/wp-content/uploads/2017/03/mnist-2.png"
@@ -24,15 +25,22 @@ mnist_model = load_model_from_save(mnist_json, mnist_hd5)
 # mnist_model.predict(np.expand_dims(np.expand_dims(np_image, axis=0), axis=0))
 # Function for creating an image from the URL
 
+def classify_image(input_url):
+    np_image = np_array_from_image(input_url)
+    model_prediction = np.argmax(mnist_model.predict(np_image), axis=0)
+    return model_prediction
+
 
 # the Flask Web Application code #
 
 app = Flask(__name__)
 
+
 @app.route('/api/mnist', methods=['POST'])
 def classify():
+    input_url = request.data.decode(encoding='UTF-8')
+    return classify_image(input_url)
 
-    return 42
 
 @app.route('/')
 def hello_world():
