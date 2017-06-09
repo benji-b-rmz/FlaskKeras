@@ -12,7 +12,7 @@ import requests
 from io import BytesIO
 
 
-def load_model_from_save(json_file, hd5_file):
+def init_from_save(json_file, hd5_file):
     json_data = open(json_file, 'r').read()
     model = model_from_json(json_data)
     model.load_weights(hd5_file)
@@ -20,7 +20,7 @@ def load_model_from_save(json_file, hd5_file):
     return model
 
 
-def np_array_from_image(image_url):
+def np_array_greyscale(image_url):
     response = requests.get(image_url)
     image = Image.open(BytesIO(response.content))
     image = image.resize((28, 28))
@@ -36,7 +36,7 @@ def np_array_from_image(image_url):
 
 def test_model_output():
     url = "http://khanhxnguyen.com/wp-content/uploads/2017/03/mnist-2.png"
-    np_image = np_array_from_image(url)
+    np_image = np_array_greyscale(url)
 
     K.set_image_dim_ordering('th')
     # fix random seed for reproducibility
@@ -56,12 +56,10 @@ def test_model_output():
 
     # again, this section is taken from Jason Brownlee's tutorial on saving/loading keras models
     # http://machinelearningmastery.com/save-load-keras-deep-learning-models/
-    # loading json and creating models from saved files
     # evaluate models and compare results to results from training:
-
     mnist_json = './model_saves/mnist_cnn_model.json'
     mnist_hd5 = './model_saves/mnist_cnn_model.h5'
-    mnist_model = load_model_from_save(json_file=mnist_json, hd5_file=mnist_hd5)
+    mnist_model = init_from_save(json_file=mnist_json, hd5_file=mnist_hd5)
 
     output_test = mnist_model.predict(np_image)
     print("Prediction for X[0]:", np.argmax(output_test))
