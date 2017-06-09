@@ -10,15 +10,6 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <!-- jquery JavaScript -->
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
@@ -31,25 +22,57 @@
         <hr>
     </div>
 
-    <!-- Info/About Section -->
+    <!-- Main content -->
+
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
+
+            <!-- Info/About Section -->
             <h4><b>MNIST Database</b></h4>
             <p>
                 To get some more information about the MNIST Database of handwritten digits, check out the website by Yann LeCun
                 <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>
             </p>
+            <br>
             <h4><b>Keras</b></h4>
             <p>
                 Keras is a Deep Learning library for Theano and TensorFlow. This specific project relies on Keras with a
                 TensorFlow backend. Learn more at the Keras site: <a href="https://keras.io">https://keras.io</a>
             </p>
+            <hr>
+
+
+            <!-- Input/Output Section -->
+            <div class="form-group">
+                <label for="input-text"><h3>Enter image URL:</h3></label>
+                <input type="text" class="form-control" rows="4" id="input-url"></input>
+                <button id="submit" class="btn btn-primary">Classify!</button>
+            </div>
+            <div class="text-center">
+                <h4>MNIST ConvNet Output:</h4>
+                <div id="mnist-output">
+                    click on classify
+                </div>
+            </div>
+
         </div>
     </div>
 
-
 </div>
 
+<!--  JavaScript Section -->
+
+<!-- jquery JavaScript -->
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- javascript for communicating with the model -->
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 
 
 </body>

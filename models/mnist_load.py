@@ -34,13 +34,6 @@ def np_array_from_image(image_url):
     return np_image
 
 
-def classify_image(input_url):
-    np_image = np_array_from_image(input_url)
-    np_image = np.reshape(np_image, 1, 28, 28, 1)
-    model_prediction = np.argmax(mnist_model.predict(np_image), axis=0)
-    return model_prediction
-
-
 def test_model_output():
     url = "http://khanhxnguyen.com/wp-content/uploads/2017/03/mnist-2.png"
     np_image = np_array_from_image(url)
@@ -69,8 +62,6 @@ def test_model_output():
     mnist_json = './model_saves/mnist_cnn_model.json'
     mnist_hd5 = './model_saves/mnist_cnn_model.h5'
     mnist_model = load_model_from_save(json_file=mnist_json, hd5_file=mnist_hd5)
-
-    # test_input_image = X_test[0]
 
     output_test = mnist_model.predict(np_image)
     print("Prediction for X[0]:", np.argmax(output_test))
