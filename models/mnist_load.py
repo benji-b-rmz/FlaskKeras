@@ -42,17 +42,14 @@ def test_model_output():
     # fix random seed for reproducibility
     seed = 7
     np.random.seed(seed)
-
+    # load data
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X_train = X_train.reshape(X_train.shape[0], 1, 28, 28).astype('float32')
+    # reshape to be [samples][pixels][width][height]
     X_test = X_test.reshape(X_test.shape[0], 1, 28, 28).astype('float32')
-
-    X_train = X_train / 255
+    # normalize inputs from 0-255 to 0-1
     X_test = X_test / 255
-
-    y_train = np_utils.to_categorical(y_train)
+    # one hot encode outputs
     y_test = np_utils.to_categorical(y_test)
-    num_classes = y_test.shape[1]
 
     # again, this section is taken from Jason Brownlee's tutorial on saving/loading keras models
     # http://machinelearningmastery.com/save-load-keras-deep-learning-models/

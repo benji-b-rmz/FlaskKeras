@@ -22,25 +22,25 @@ image = image.convert(mode="RGB")
 np_image = np.array(image)
 print(np_image.shape)
 np_image = np_image.reshape(3, 32, 32)
-np_image = np_image/255
+np_image = np_image / 255
 print(np_image.shape)
-
-
 
 cifar10_json = './model_saves/cifar10_cnn_model.json'
 cifar10_hd5 = './model_saves/cifar10_cnn_model.h5'
+
 
 def np_array_rgb(image_url):
     response = requests.get(url)
     image = Image.open(BytesIO(response.content))
     image = image.resize((32, 32))
-    image = image.convert(mode="RGB")\
-    # reshape for input to model
+    image = image.convert(mode="RGB") \
+        # reshape for input to model
     np_image = np.array(image)
     np_image = np_image.reshape(3, 32, 32)
     # normalize rgb values
-    np_image = np_image/255
+    np_image = np_image / 255
     return np_image
+
 
 def init_from_save(json_file, hd5_file):
     json_data = open(json_file, 'r').read()
@@ -58,25 +58,17 @@ def test_cifar10_model():
     # load data
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
     # reshape to be [samples][pixels][width][height]
-    print(X_train.shape[1:])
-    X_train = X_train.reshape(X_train.shape[0], 3, 32, 32).astype('float32')
     X_test = X_test.reshape(X_test.shape[0], 3, 32, 32).astype('float32')
     # normalize inputs from 0-255 to 0-1
-    X_train = X_train / 255
     X_test = X_test / 255
     # one hot encode outputs
-    y_train = np_utils.to_categorical(y_train)
     y_test = np_utils.to_categorical(y_test)
-    num_classes = y_test.shape[1]
 
     # again, this section is taken from Jason Brownlee's tutorial on saving/loading keras models
     # http://machinelearningmastery.com/save-load-keras-deep-learning-models/
     # loading json and creating models from saved files
     cifar10_model = init_from_save(cifar10_json, cifar10_hd5)
     print("Loaded models from disk")
-
-    # evaluate models and compare results to trained models:
-    cifar10_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     test_input_image = X_test[0]
     print(test_input_image.shape)
