@@ -51,6 +51,12 @@ def classify():
     return mnist_classify(input_url)
 
 
+@app.route('/api/cifar10', methods=['POST'])
+def classify():
+    input_url = request.data.decode(encoding='UTF-8')
+    return cifar10_classify(input_url)
+
+
 @app.route('/')
 def hello_world():
     return render_template('index.html')
