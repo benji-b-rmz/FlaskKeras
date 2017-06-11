@@ -43,14 +43,29 @@
 
 
             <!-- Input/Output Section -->
+
+            <!-- MNIST section -->
             <div class="form-group">
                 <label for="input-text"><h3>Enter image URL:</h3></label>
-                <input type="text" class="form-control" rows="4" id="input-url"></input>
-                <button id="submit" class="btn btn-primary">Classify!</button>
+                <input type="text" class="form-control" rows="4" id="mnist-input-url"></input>
+                <button id="mnist-submit" class="btn btn-primary">Classify!</button>
             </div>
             <div class="text-center">
                 <h4>MNIST ConvNet Output:</h4>
                 <div id="mnist-output">
+                    click on classify
+                </div>
+            </div>
+
+            <!-- CIFAR10 Section -->
+            <div class="form-group">
+                <label for="input-text"><h3>Enter image URL:</h3></label>
+                <input type="text" class="form-control" rows="4" id="cifar10-input-url"></input>
+                <button id="cifar10-submit" class="btn btn-primary">Classify!</button>
+            </div>
+            <div class="text-center">
+                <h4>CIFAR10 ConvNet Output:</h4>
+                <div id="cifar10-output">
                     click on classify
                 </div>
             </div>
