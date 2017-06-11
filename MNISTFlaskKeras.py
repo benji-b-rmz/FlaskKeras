@@ -5,7 +5,7 @@ from flask import Flask, request, render_template
 # keras/tensorflow and cnn modules
 import numpy as np
 import os
-from models import mnist_load
+from models import mnist_load, cifar10_load
 # modules for creating/working with images from URL
 from PIL import Image
 import requests
@@ -16,12 +16,25 @@ mnist_json = './models/model_saves/mnist_cnn_model.json'
 mnist_hd5 = './models/model_saves/mnist_cnn_model.h5'
 mnist_model = mnist_load.init_from_save(mnist_json, mnist_hd5)
 
+cifar10_json = './models/model_saves/cifar10_cnn_model.json'
+cifar10_hd5 = './models/model_saves/cifar10_cnn_model.h5'
+cifar10_model = cifar10_load.init_from_save(cifar10_json, cifar10_hd5)
 
-def classify_image(input_url):
+def mnist_classify(input_url):
     print(input_url)
     try:
         np_image = mnist_load.np_array_greyscale(input_url)
         model_prediction = np.argmax(mnist_model.predict(np_image))
+        print(model_prediction)
+        return model_prediction.__str__()
+    except:
+        return "check your url"
+
+def cifar10_classify(input_url):
+    print(input_url)
+    try:
+        np_image = cifar10_model.np_array_greyscale(input_url)
+        model_prediction = np.argmax(cifar10_model.predict(np_image))
         print(model_prediction)
         return model_prediction.__str__()
     except:
@@ -35,7 +48,7 @@ app = Flask(__name__)
 @app.route('/api/mnist', methods=['POST'])
 def classify():
     input_url = request.data.decode(encoding='UTF-8')
-    return classify_image(input_url)
+    return mnist_classify(input_url)
 
 
 @app.route('/')

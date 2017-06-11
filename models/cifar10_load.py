@@ -13,6 +13,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 
+# an image of a red car for testing
 url = "http://www.teckinfo.com/images/automobile_img.jpg"
 response = requests.get(url)
 image = Image.open(BytesIO(response.content))
