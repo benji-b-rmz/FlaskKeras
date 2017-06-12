@@ -13,25 +13,14 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-# an image of a red car for testing
-url = "http://www.teckinfo.com/images/automobile_img.jpg"
-response = requests.get(url)
-image = Image.open(BytesIO(response.content))
-image = image.resize((32, 32))
-image = image.convert(mode="RGB")
-
-np_image = np.array(image)
-print(np_image.shape)
-np_image = np_image.reshape(3, 32, 32)
-np_image = np_image / 255
-print(np_image.shape)
 
 cifar10_json = './model_saves/cifar10_cnn_model.json'
 cifar10_hd5 = './model_saves/cifar10_cnn_model.h5'
 
 
 def np_array_rgb(image_url):
-    response = requests.get(url)
+
+    response = requests.get(image_url)
     image = Image.open(BytesIO(response.content))
     image = image.resize((32, 32))
     image = image.convert(mode="RGB") \
@@ -40,6 +29,8 @@ def np_array_rgb(image_url):
     np_image = np_image.reshape(3, 32, 32)
     # normalize rgb values
     np_image = np_image / 255
+    np_image = np.expand_dims(np_image, axis=0)
+    # print(np_image.shape)
     return np_image
 
 
@@ -71,12 +62,13 @@ def test_cifar10_model():
     cifar10_model = init_from_save(cifar10_json, cifar10_hd5)
     print("Loaded models from disk")
 
-    test_input_image = X_test[0]
-    print(test_input_image.shape)
+    # an image of a red car for testing
+    url = "http://www.teckinfo.com/images/automobile_img.jpg"
+    test_image = np_array_rgb(url)
+    print(test_image.shape)
 
-    # expanded_dim_img = np.expand_dims(np_image, axis=0) /255
-    output_test = cifar10_model.predict(np.expand_dims(np_image, axis=0))
-    print("Prediction for X[0]:", np.argmax(output_test))
+    output_test = cifar10_model.predict(test_image)
+    print("Prediction for X[0]:", np.argmax(output_test)) # should output 1, the index for car
 
     scores = cifar10_model.evaluate(X_test, y_test, verbose=0)
     print("Large CNN Error: %.2f%%" % (100 - scores[1] * 100))

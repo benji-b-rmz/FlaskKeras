@@ -33,7 +33,7 @@ def mnist_classify(input_url):
 def cifar10_classify(input_url):
     print(input_url)
     try:
-        np_image = cifar10_model.np_array_greyscale(input_url)
+        np_image = cifar10_model.np_array_rgb(input_url)
         model_prediction = np.argmax(cifar10_model.predict(np_image))
         print(model_prediction)
         return model_prediction.__str__()
@@ -46,13 +46,13 @@ app = Flask(__name__)
 
 
 @app.route('/api/mnist', methods=['POST'])
-def classify():
+def mnist_api():
     input_url = request.data.decode(encoding='UTF-8')
     return mnist_classify(input_url)
 
 
 @app.route('/api/cifar10', methods=['POST'])
-def classify():
+def cifar10_api():
     input_url = request.data.decode(encoding='UTF-8')
     return cifar10_classify(input_url)
 

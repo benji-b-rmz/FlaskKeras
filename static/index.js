@@ -8,7 +8,7 @@ $(document).on('click','#mnist-submit',function () {
     var url = $('#mnist-input-url').val();
     console.log(url);
     //set output to processing gif while we wait for ajax response
-    var gif =  "<div class='text-center'> Processing...<br/><img class='text-center' src='http://24.media.tumblr.com/4c5070a4f871a1d2b1e24b70e8acc496/tumblr_mqd5ibdXgi1sc6f01o1_500.gif'/> </div>";
+    var gif =  "<div class='text-center'> Processing...<br/><img class='text-center' src='https://railsgirlssummerofcode.org/img/blog/2016/l1ghtsab3r-partyparrot.gif'/> </div>";
     $("#mnist-output").html(gif);
     $.ajax({
         url:'/api/mnist',
@@ -16,7 +16,7 @@ $(document).on('click','#mnist-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            $("#mnist-output").html(result);
+            $("#mnist-output").html("<h3>"+result+"</h3>");
         },
     });
 });
@@ -27,7 +27,7 @@ $(document).on('click','#cifar10-submit',function () {
     var url = $('#cifar10-input-url').val();
     console.log(url);
     //set output to processing gif while we wait for ajax response
-    var gif =  "<div class='text-center'> Processing...<br/><img class='text-center' src='http://24.media.tumblr.com/4c5070a4f871a1d2b1e24b70e8acc496/tumblr_mqd5ibdXgi1sc6f01o1_500.gif'/> </div>";
+    var gif =  "<div class='text-center'> Processing...<br/><img class='text-center' src='https://railsgirlssummerofcode.org/img/blog/2016/l1ghtsab3r-partyparrot.gif'/> </div>";
     $("#cifar10-output").html(gif);
     $.ajax({
         url:'/api/cifar10',
@@ -35,7 +35,7 @@ $(document).on('click','#cifar10-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            $("#cifar10-output").html(result);
+            $("#cifar10-output").html("<h3>"+result+"</h3>");
         },
     });
 });
