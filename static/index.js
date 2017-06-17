@@ -16,7 +16,8 @@ $(document).on('click','#mnist-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            $("#mnist-output").html("<h3>"+result+"</h3>");
+            $("#mnist-output").html("<h3>"+result+"</h3>" +
+                "<img class='text-center img-responsive' src='"+ url +"'/>");
         },
     });
 });
@@ -35,7 +36,8 @@ $(document).on('click','#cifar10-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            $("#cifar10-output").html("<h3>"+result+"</h3>");
+            $("#cifar10-output").html("<h3>"+result+"</h3>" +
+                "<img class='text-center img-responsive' src='"+ url +"'/>");
         },
     });
 });
