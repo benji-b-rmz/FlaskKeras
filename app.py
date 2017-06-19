@@ -5,7 +5,9 @@ from flask import Flask, request, render_template
 # keras/tensorflow and cnn modules
 import numpy as np
 import os
+import json
 from models import mnist_load, cifar10_load
+
 # modules for creating/working with images from URL
 from PIL import Image
 import requests
@@ -20,25 +22,31 @@ cifar10_json = './models/model_saves/cifar10_cnn_model.json'
 cifar10_hd5 = './models/model_saves/cifar10_cnn_model.h5'
 cifar10_model = cifar10_load.init_from_save(cifar10_json, cifar10_hd5)
 
+# refactor the duplicate code for mnist and cifar10
 def mnist_classify(input_url):
     print(input_url)
     try:
         np_image = mnist_load.np_array_greyscale(input_url)
-        model_prediction = np.argmax(mnist_model.predict(np_image))
+        model_prediction = mnist_model.predict(np_image)
         print(model_prediction)
-        return model_prediction.__str__()
+        response_json = {'probabilities': model_prediction[0].__str__(),
+                         'prediction': np.argmax(model_prediction).__str__()}
+        return json.dumps(response_json)
     except:
         return "check your url"
 
 def cifar10_classify(input_url):
     print(input_url)
     try:
-        np_image = cifar10_model.np_array_rgb(input_url)
+        np_image = cifar10_load.np_array_rgb(input_url)
         model_prediction = np.argmax(cifar10_model.predict(np_image))
         print(model_prediction)
-        return model_prediction.__str__()
+        response_json = {'probabilities': model_prediction[0].__str__(),
+                         'prediction': np.argmax(model_prediction).__str__()}
+        return json.dumps(response_json)
     except:
         return "check your url"
+
 
 # the Flask Web Application code #
 
