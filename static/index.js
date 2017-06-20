@@ -16,12 +16,32 @@ $(document).on('click','#mnist-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            console.log(result);
+            // console.log(result);
+            var json_response = JSON.parse(result);
+            console.log("The json version: " + json_response.prediction);
             $("#mnist-output").html("<h3>"+result+"</h3>" +
                 "<div class='row'>" +
-                    "<div class='col-xs-4 col-xs-offset-4'>" +
-                        "<img class='img-responsive' src='"+ url +"'/>" +
-                    "</div>" +
+                "<div class='col-xs-4'>" +
+                "<div class='table-responsive'>" +
+                "<table class='table'> " +
+                "<thead>" +
+                "<tr> " +
+                "<th>Num</th>" +
+                "<th>Prob</th>" +
+                "</tr>" +
+                "</thead> " +
+                "<tbody>" +
+                "<tr> " +
+                "<td>0</td> " +
+                "<td>" + json_response.probabilities[0] + "</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "</div>" +
+                "</div>" +
+                "<div class='col-xs-4'>" +
+                "<img class='img-responsive' src='"+ url +"'/>" +
+                "</div>" +
                 "</div>");
         },
     });
@@ -43,9 +63,9 @@ $(document).on('click','#cifar10-submit',function () {
         success: function(result){
             $("#cifar10-output").html("<h3>"+result+"</h3>" +
                 "<div class='row'>" +
-                    "<div class='col-xs-4 col-xs-offset-4'>" +
-                        "<img class='text-center img-responsive' src='"+ url +"'/>" +
-                    "</div> " +
+                "<div class='col-xs-4 col-xs-offset-4'>" +
+                "<img class='text-center img-responsive' src='"+ url +"'/>" +
+                "</div> " +
                 "</div>");
         },
     });

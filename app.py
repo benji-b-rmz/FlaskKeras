@@ -22,6 +22,7 @@ cifar10_json = './models/model_saves/cifar10_cnn_model.json'
 cifar10_hd5 = './models/model_saves/cifar10_cnn_model.h5'
 cifar10_model = cifar10_load.init_from_save(cifar10_json, cifar10_hd5)
 
+
 # refactor the duplicate code for mnist and cifar10
 def mnist_classify(input_url):
     print(input_url)
@@ -34,6 +35,7 @@ def mnist_classify(input_url):
         return json.dumps(response_json)
     except:
         return "check your url"
+
 
 def cifar10_classify(input_url):
     print(input_url)
