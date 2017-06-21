@@ -9,7 +9,7 @@ $(document).on('click','#mnist-submit',function () {
     console.log(url);
     //set output to processing gif while we wait for ajax response
     var gif =  "<div class='text-center'> Processing...<br/><img class='text-center' src='https://railsgirlssummerofcode.org/img/blog/2016/l1ghtsab3r-partyparrot.gif'/> </div>";
-    $("#mnist-output").html(gif);
+    $("#mnist-output-img").html(gif);
     $.ajax({
         url:'/api/mnist',
         method: 'POST',
@@ -18,31 +18,20 @@ $(document).on('click','#mnist-submit',function () {
         success: function(result){
             // console.log(result);
             var json_response = JSON.parse(result);
-            console.log("The json version: " + json_response.prediction);
-            $("#mnist-output").html("<h3>"+result+"</h3>" +
-                "<div class='row'>" +
-                "<div class='col-xs-4'>" +
-                "<div class='table-responsive'>" +
-                "<table class='table'> " +
-                "<thead>" +
-                "<tr> " +
-                "<th>Num</th>" +
-                "<th>Prob</th>" +
-                "</tr>" +
-                "</thead> " +
-                "<tbody>" +
-                "<tr> " +
-                "<td>0</td> " +
-                "<td>" + json_response.probabilities[0] + "</td>" +
-                "</tr>" +
-                "</tbody>" +
-                "</table>" +
-                "</div>" +
-                "</div>" +
-                "<div class='col-xs-4'>" +
-                "<img class='img-responsive' src='"+ url +"'/>" +
-                "</div>" +
-                "</div>");
+            console.log("The json prediction: " + json_response.probabilities);
+            var probabilites = json_response.probabilities;
+            $("#mnist-output-img").html("<h3>Prediction: " + json_response.prediction +"</h3>" +
+                "<img class='img-responsive' src="+ url +" />");
+            $("#0-prob").html(probabilites[0]);
+            $("#1-prob").html(probabilites[1]);
+            $("#2-prob").html(probabilites[2]);
+            $("#3-prob").html(probabilites[3]);
+            $("#4-prob").html(probabilites[4]);
+            $("#5-prob").html(probabilites[5]);
+            $("#6-prob").html(probabilites[6]);
+            $("#7-prob").html(probabilites[7]);
+            $("#8-prob").html(probabilites[8]);
+            $("#9-prob").html(probabilites[9]);
         },
     });
 });
