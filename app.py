@@ -22,6 +22,16 @@ cifar10_json = './models/model_saves/cifar10_cnn_model.json'
 cifar10_hd5 = './models/model_saves/cifar10_cnn_model.h5'
 cifar10_model = cifar10_load.init_from_save(cifar10_json, cifar10_hd5)
 
+cifar10_dict = {0: "airplane",
+                1: "automobile",
+                2: "bird",
+                3: "cat",
+                4: "deer",
+                5: "dog",
+                6: "frog",
+                7: "horse",
+                8: "ship",
+                9: "truck"}
 
 # refactor the duplicate code for mnist and cifar10
 def mnist_classify(input_url):
@@ -42,9 +52,10 @@ def cifar10_classify(input_url):
     try:
         np_image = cifar10_load.np_array_rgb(input_url)
         model_prediction = np.argmax(cifar10_model.predict(np_image))
+        img_class = cifar10_dict[int(model_prediction)]
         print(model_prediction)
-        response_json = {'probabilities': model_prediction[0].__str__(),
-                         'prediction': np.argmax(model_prediction).__str__()}
+        print(img_class)
+        response_json = {'prediction': img_class}
         return json.dumps(response_json)
     except:
         return "check your url"
