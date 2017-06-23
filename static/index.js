@@ -22,16 +22,6 @@ $(document).on('click','#mnist-submit',function () {
             var probabilites = json_response.probabilities;
             $("#mnist-output-img").html("<h3>Prediction: " + json_response.prediction +"</h3>" +
                 "<img class='img-responsive' src="+ url +" />");
-            $("#0-prob").html(probabilites[0]);
-            $("#1-prob").html(probabilites[1]);
-            $("#2-prob").html(probabilites[2]);
-            $("#3-prob").html(probabilites[3]);
-            $("#4-prob").html(probabilites[4]);
-            $("#5-prob").html(probabilites[5]);
-            $("#6-prob").html(probabilites[6]);
-            $("#7-prob").html(probabilites[7]);
-            $("#8-prob").html(probabilites[8]);
-            $("#9-prob").html(probabilites[9]);
         },
     });
 });
@@ -50,7 +40,8 @@ $(document).on('click','#cifar10-submit',function () {
         contentType: 'text/plain',
         data: url,
         success: function(result){
-            $("#cifar10-output").html("<h3>"+result+"</h3>" +
+            var json_response = JSON.parse(result);
+            $("#cifar10-output").html("<h3>"+"Prediction: " + json_response.prediction + "</h3>" +
                 "<div class='row'>" +
                 "<div class='col-xs-4 col-xs-offset-4'>" +
                 "<img class='text-center img-responsive' src='"+ url +"'/>" +
