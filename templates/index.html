@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MNIST with Keras</title>
+    <title>MNIST & CIFAR-10 with Keras</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -19,6 +19,7 @@
     <!-- Page title section -->
     <div class="row text-center">
         <h1><b>MNIST & CIFAR-10 with Keras + Flask</b></h1>
+        <h4><a href="https://github.com/benji-b-rmz/FlaskKeras">view source <i class="fa fa-github"></i> </a></h4>
         <hr>
     </div>
 
@@ -46,7 +47,7 @@
             <!-- MNIST section -->
             <div class="form-group">
                 <label for="input-text"><h3>Enter image URL:</h3></label>
-                <input type="text" class="form-control" rows="4" id="mnist-input-url"></input>
+                <input type="text" class="form-control" rows="4" id="mnist-input-url">
                 <button id="mnist-submit" class="btn btn-primary">Classify!</button>
             </div>
             <div class="text-center">
